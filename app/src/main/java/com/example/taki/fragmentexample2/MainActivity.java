@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    long firstTime,lastTime;
     Button frag1,frag2,frag3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         frag1=findViewById(R.id.frag1);
         frag2=findViewById(R.id.frag2);
         frag3=findViewById(R.id.frag3);
+        addFragment(new fragment1());
     }
 
     public void selectfrag1(View view) {
@@ -53,5 +56,17 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_place,fragment);
         transaction.commit();
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        lastTime=firstTime;
+        firstTime = System.currentTimeMillis();
+        if (firstTime-lastTime<200){
+            finish();
+        }
+        else {
+            Toast.makeText(this, "press double click to Exit", Toast.LENGTH_SHORT).show();
+        }
     }
 }
